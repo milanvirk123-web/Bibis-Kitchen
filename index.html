@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BiBi’s Kitchen | Vancouver</title>
+  <meta name="description" content="BiBi’s Kitchen in Vancouver — eat fresh feel fresh. Order online via Uber Eats, DoorDash, or SkipTheDishes." />
+
+  <style>
+    :root{
+      --accent:#5F7D2C;
+      --accentSoft: rgba(95,125,44,.22);
+      --bg:#070a12;
+      --bg2:#0b1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.035);
+      --text:#f4f6ff;
+      --muted:#b9c2da;
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --ice: rgba(110,231,255,.18);
+      --purple: rgba(167,139,250,.16);
+      --gold: rgba(250,204,21,.14);
+      --r:18px;
+      --r2:14px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% -10%, var(--accentSoft), transparent 62%),
+        radial-gradient(900px 600px at 95% 0%, var(--purple), transparent 55%),
+        radial-gradient(900px 600px at 10% 40%, var(--ice), transparent 55%),
+        radial-gradient(900px 600px at 85% 65%, var(--gold), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+    a:hover{opacity:.92}
+    .wrap{max-width:1120px;margin:0 auto;padding:18px}
+    section{scroll-margin-top:120px}
+
+    /* Sticky top nav */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background: rgba(7,10,18,.78);
+      backdrop-filter: blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .navrow{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:950;letter-spacing:.2px;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:999px;
+      border:2px solid rgba(95,125,44,.9);
+      background: radial-gradient(circle at 30% 30%, rgba(95,125,44,.35), rgba(0,0,0,.25));
+      display:grid;place-items:center;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logo span{font-weight:1000;letter-spacing:.7px}
+
+    .navlinks{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .navlinks a{
+      color:var(--muted);
+      padding:9px 12px;border-radius:999px;
+      border:1px solid transparent;
+      transition: background .12s ease, border-color .12s ease, color .12s ease, transform .12s ease;
+    }
+    .navlinks a:hover{
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-color:rgba(255,255,255,.08);
+      transform: translateY(-1px);
+    }
+    .navlinks a.active{
+      color:var(--text);
+      border-color: rgba(95,125,44,.65);
+      background: rgba(95,125,44,.14);
+    }
+
+    .rightbits{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 11px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .dot{width:8px;height:8px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 4px rgba(95,125,44,.18)}
+    .pill strong{color:var(--text);font-weight:900}
+
+    /* Card base */
+    .card{
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      box-shadow: var(--shadow);
+    }
+    .block{padding:18px;margin-top:14px}
+    .muted{color:var(--muted)}
+    .accentLine{width:56px;height:4px;border-radius:999px;background:var(--accent);margin:10px 0 14px}
+
+    /* "Pages" */
+    .page{display:none}
+    .page.active{display:block}
+
+    /* Hero */
+    .hero{margin-top:14px;overflow:hidden;position:relative;min-height:440px}
+    .hero::before{
+      content:"";
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.74)),
+        radial-gradient(900px 500px at 25% 15%, rgba(95,125,44,.22), transparent 60%),
+        radial-gradient(800px 450px at 85% 10%, rgba(110,231,255,.12), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.12);
+    }
+    .heroInner{
+      position:relative;
+      padding:34px 22px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    .hero h1{margin:0 0 10px;font-size:48px;line-height:1.05;letter-spacing:-.5px}
+    .motto{margin:0 0 14px;color:rgba(255,255,255,.84);font-size:16px}
+    .ctaRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 14px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:950;
+      transition: transform .12s ease, filter .12s ease, background .12s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background: var(--accent);
+      color:#08110b;
+      border-color: rgba(0,0,0,.12);
+      box-shadow: 0 12px 34px rgba(95,125,44,.24);
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .btn.white{
+      background: rgba(255,255,255,.92);
+      color:#0c1020;
+      border-color: rgba(0,0,0,.08);
+    }
+    .heroInfo{
+      padding:16px;
+      border-radius:var(--r2);
+      background: rgba(7,10,18,.58);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .heroInfo p{margin:0 0 10px;color:var(--muted)}
+    .heroInfo .big{color:var(--text);font-weight:950}
+    .heroInfo .small{font-size:13px}
+
+    /* Visit + Hours */
+    .twoCol{display:grid;grid-template-columns: 1fr 1fr;gap:14px;align-items:stretch}
+    .mapBox{overflow:hidden;border-radius:var(--r2);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
+    iframe{width:100%;height:320px;border:0}
+
+    .hoursCard{
+      border-radius:var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      padding:14px;
+    }
+    .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);color:var(--muted)}
+    .row:last-child{border-bottom:none}
+    .row strong{color:var(--text)}
+    .note{margin-top:10px;font-size:13px;color:rgba(255,255,255,.72)}
+
+    /* Contact */
+    .contactGrid{display:grid;grid-template-columns: 1fr 1fr;gap:14px;margin-top:12px}
+    .contactCard{border-radius:var(--r2);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);padding:14px}
+    .contactCard h3{margin:0 0 10px;font-size:16px;letter-spacing:.2px}
+    .contactLine{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .contactLine a{font-weight:950}
+
+    /* Social icons */
+    .socials{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    .sIcon{
+      width:46px;height:46px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      display:grid;place-items:center;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .sIcon:hover{transform:translateY(-2px);border-color: rgba(95,125,44,.6);background: rgba(95,125,44,.12)}
+    .sIcon svg{width:20px;height:20px;opacity:.92}
+
+    /* About section with slider on the right (desktop) */
+    .aboutGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+      margin-top:14px;
+    }
+    .aboutText{padding:18px}
+    .aboutSliderWrap{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .slider{
+      position:relative;
+      border-radius:var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      flex:1;
+      min-height: 260px;
+      touch-action: pan-y; /* allow vertical scroll, we handle horizontal swipe */
+      user-select: none;
+    }
+    .slide{position:absolute; inset:0; display:none}
+    .slide.active{display:block}
+    .slideBox{
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      color:rgba(255,255,255,.75);
+      font-weight:950;
+      letter-spacing:.4px;
+      background:
+        radial-gradient(900px 500px at 25% 15%, rgba(95,125,44,.20), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    }
+    .slide img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      pointer-events:none; /* keeps swipe smooth */
+    }
+
+    .sliderControls{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+    }
+    .sliderBtn{
+      flex: 0 0 auto;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:950;
+    }
+    .sliderBtn:hover{transform:translateY(-1px)}
+    .dots{
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      align-items:center;
+      flex:1;
+    }
+    .dotBtn{
+      width:10px;height:10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      cursor:pointer;
+    }
+    .dotBtn.active{
+      background: var(--accent);
+      border-color: rgba(0,0,0,.12);
+      box-shadow:0 0 0 4px rgba(95,125,44,.18);
+    }
+
+    /* ORDER ONLINE */
+    .orderGrid{display:grid;grid-template-columns: 1fr;gap:12px;margin-top:12px}
+    .orderBtn{
+      display:flex;align-items:center;gap:14px;
+      padding:16px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .orderBtn:hover{transform:translateY(-2px);border-color: rgba(95,125,44,.65);background: rgba(95,125,44,.12)}
+    .logoBox{
+      width:64px;height:64px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+      overflow:hidden;
+    }
+    .logoBox .mark{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:1000;
+      letter-spacing:.5px;
+    }
+    .orderText{flex:1}
+    .orderText .name{margin:0;font-weight:1000;font-size:18px}
+    .orderText .sub{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .arrow{
+      width:42px;height:42px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      display:grid;place-items:center;
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.9);
+      font-weight:1000;
+    }
+
+    /* MENU */
+    .category{margin-top:18px;padding-top:6px;border-top:1px solid rgba(255,255,255,.10)}
+    .category:first-of-type{border-top:none;margin-top:6px}
+    .catTitle{
+      text-align:center;
+      font-weight:1000;
+      letter-spacing:1.2px;
+      color:rgba(95,125,44,.95);
+      margin:12px 0 6px;
+      font-size:20px;
+    }
+    .catNote{
+      text-align:center;
+      margin:0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .menuTabs{
+      position: sticky;
+      z-index: 30;
+      top: 72px;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(7,10,18,.72);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .menuTabs::-webkit-scrollbar{height:6px}
+    .menuTabs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:999px}
+
+    .tabRow{
+      display:flex;
+      gap:10px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      min-width: max-content;
+      justify-content:center;
+    }
+    .tabBtn{
+      flex: 0 0 auto;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .tabBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(95,125,44,.6);
+      background: rgba(95,125,44,.12);
+    }
+
+    /* Desktop = 3 columns */
+    .menuGrid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:14px;
+    }
+    .item{
+      border-radius:var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .item:hover{transform:translateY(-2px);border-color: rgba(95,125,44,.45)}
+    .thumb{
+      aspect-ratio: 4/3;
+      width:100%;
+      background:
+        radial-gradient(800px 400px at 30% 10%, rgba(95,125,44,.18), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:grid;place-items:center;
+      color:rgba(255,255,255,.65);
+      font-weight:900;
+      letter-spacing:.4px;
+    }
+    .itemBody{padding:12px}
+    .nameRow{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .itemName{
+      margin:0;
+      font-weight:1000;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      font-size:14px;
+      line-height:1.2;
+    }
+    .price{
+      margin:0;
+      color:rgba(255,255,255,.86);
+      font-weight:1000;
+      font-size:14px;
+      white-space:nowrap;
+    }
+    .desc{margin:8px 0 0;color:var(--muted);font-size:13px}
+
+    .footer{
+      margin-top:14px;
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width: 980px){
+      .heroInner{grid-template-columns:1fr}
+      .twoCol{grid-template-columns:1fr}
+      .contactGrid{grid-template-columns:1fr}
+      .hero h1{font-size:36px}
+      .hero{min-height:auto}
+
+      /* About stacks, BUT slider goes ABOVE text on mobile */
+      .aboutGrid{grid-template-columns:1fr}
+      .aboutSliderWrap{order:1}
+      .aboutText{order:2}
+
+      /* iPhone / mobile = 2 columns */
+      .menuGrid{grid-template-columns: repeat(2, minmax(0, 1fr));}
+
+      .tabBtn{font-size:12.5px;padding:9px 11px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap navrow">
+      <a class="brand" href="#home" aria-label="BiBi's Kitchen home">
+        <div class="logo" aria-hidden="true"><span>BK</span></div>
+        <span>BiBi’s Kitchen</span>
+      </a>
+
+      <nav class="navlinks" aria-label="Primary navigation">
+        <a href="#home" data-page="home" class="active">Home</a>
+        <a href="#order" data-page="order">Order online</a>
+        <a href="#menu" data-page="menu">Menu</a>
+      </nav>
+
+      <div class="rightbits">
+        <span class="pill"><span class="dot" aria-hidden="true"></span><strong>Open</strong> 7:00am–8:30pm</span>
+        <a class="pill" href="tel:16045659898"><strong>Call</strong> 604-565-9898</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- ===================== HOME PAGE ===================== -->
+    <div class="page active" id="page-home" aria-label="Home page">
+      <section class="hero card" aria-label="Welcome banner">
+        <div class="heroInner">
+          <div>
+            <h1>Welcome to BiBi’s Kitchen</h1>
+            <p class="motto">eat fresh feel fresh</p>
+
+            <div class="ctaRow">
+              <a class="btn primary" href="#order">Order Online</a>
+              <a class="btn white" href="#menu">Menu</a>
+            </div>
+          </div>
+
+          <aside class="heroInfo">
+            <p class="big">418 Terminal Avenue</p>
+            <p>Vancouver, British Columbia V6A 0C1, Canada</p>
+            <p class="small"><span class="muted">Phone:</span> <a href="tel:16045659898"><strong style="color:var(--text)">604-565-9898</strong></a></p>
+            <p class="small muted" style="margin-top:10px;">Tip: you can replace the hero background with a food photo later.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- About + Slider -->
+      <section class="aboutGrid">
+        <!-- Keep this order so on DESKTOP slider stays on the RIGHT -->
+        <div class="card aboutText" aria-label="About us">
+          <h2>About Us</h2>
+          <div class="accentLine" aria-hidden="true"></div>
+          <p class="muted" style="margin:0;">
+            At Bibi's Kitchen, we don't just serve food; we craft experiences that tell the story of India's rich culinary heritage.
+            Our journey began with a simple vision: to bring the vibrant flavors and authentic tastes of Indian fast food to discerning palates all around.
+          </p>
+          <p class="muted" style="margin:12px 0 0;font-size:13px;">
+            (You can swap these slider placeholders with real photos anytime.)
+          </p>
+        </div>
+
+        <div class="card aboutSliderWrap" aria-label="Photo slider">
+          <h2 style="margin:0;">Gallery</h2>
+          <div class="accentLine" aria-hidden="true"></div>
+
+          <div class="slider" id="aboutSlider">
+            <div class="slide active">
+              <!-- Replace this placeholder with an actual image if you want:
+                   <img src="images/slide1.jpg" alt="BiBi's Kitchen food" /> -->
+              <div class="slideBox">Slide 1 (Add photo)</div>
+            </div>
+
+            <div class="slide">
+              <div class="slideBox">Slide 2 (Add photo)</div>
+            </div>
+
+            <div class="slide">
+              <div class="slideBox">Slide 3 (Add photo)</div>
+            </div>
+          </div>
+
+          <div class="sliderControls">
+            <button class="sliderBtn" type="button" id="prevSlide">◀ Prev</button>
+            <div class="dots" id="slideDots" aria-label="Slide dots"></div>
+            <button class="sliderBtn" type="button" id="nextSlide">Next ▶</button>
+          </div>
+
+          <p class="muted" style="margin:0;font-size:12.5px;text-align:center;">
+            On mobile: swipe left/right on the photo.
+          </p>
+        </div>
+      </section>
+
+      <section class="twoCol" aria-label="Visit and hours" style="margin-top:14px;">
+        <div class="card block">
+          <h2>Visit Us</h2>
+          <div class="accentLine" aria-hidden="true"></div>
+          <p class="muted" style="margin:0 0 12px;">
+            <strong style="color:var(--text)">418 Terminal Avenue, Vancouver, BC V6A 0C1</strong>
+          </p>
+
+          <div class="mapBox">
+            <iframe
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=418+Terminal+Avenue+Vancouver+BC&output=embed"
+              title="Map to BiBi's Kitchen"></iframe>
+          </div>
+        </div>
+
+        <div class="card block">
+          <h2>Hours</h2>
+          <div class="accentLine" aria-hidden="true"></div>
+
+          <div class="hoursCard">
+            <div class="row"><strong>Monday</strong><span>7 a.m. – 8:30 p.m.</span></div>
+            <div class="row"><strong>Tuesday</strong><span>7 a.m. – 8:30 p.m.</span></div>
+            <div class="row"><strong>Wednesday</strong><span>7 a.m. – 8:30 p.m.</span></div>
+            <div class="row"><strong>Thursday</strong><span>7 a.m. – 8:30 p.m.</span></div>
+            <div class="row"><strong>Friday</strong><span>7 a.m. – 8:30 p.m.</span></div>
+            <div class="row"><strong>Saturday</strong><span>7 a.m. – 8:30 p.m.</span></div>
+            <div class="row"><strong>Sunday</strong><span>9 a.m. – 5 p.m.</span></div>
+            <div class="note">Note: Hours might differ on New Year’s Eve and New Year’s Day.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card block" aria-label="Contact us">
+        <h2>Contact Us</h2>
+        <div class="accentLine" aria-hidden="true"></div>
+
+        <div class="contactGrid">
+          <div class="contactCard">
+            <h3>Call</h3>
+            <div class="contactLine">
+              <span class="muted">Phone</span>
+              <a href="tel:16045659898">604-565-9898</a>
+            </div>
+            <p class="muted" style="margin:10px 0 0;font-size:13px;">Tap to call from mobile.</p>
+          </div>
+
+          <div class="contactCard">
+            <h3>Socials</h3>
+            <p class="muted" style="margin:0;">Follow for updates + food pics.</p>
+
+            <div class="socials" aria-label="Social links">
+              <a class="sIcon" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/bibiskitchen.ca/?hl=en" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <circle cx="17.5" cy="6.5" r="1"></circle>
+                </svg>
+              </a>
+
+              <a class="sIcon" target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@bibiskitchen24?lang=en" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                  <path d="M12 15V3c2 2 4 3 7 3v4c-3 0-5-1-7-3"></path>
+                </svg>
+              </a>
+
+              <a class="sIcon" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/bibis.kitchen.7/" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 8h3V5h-3c-2 0-4 2-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9c0-.6.4-1 1-1z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="card footer">
+        © <span id="year"></span> BiBi’s Kitchen · Vancouver, BC
+      </footer>
+    </div>
+
+    <!-- ===================== ORDER ONLINE PAGE ===================== -->
+    <div class="page" id="page-order" aria-label="Order online page">
+      <section class="card block">
+        <h2>Order Online</h2>
+        <div class="accentLine" aria-hidden="true"></div>
+        <p class="muted" style="margin:0;">Pick a platform below (opens in a new tab).</p>
+
+        <div class="orderGrid">
+          <a class="orderBtn" target="_blank" rel="noopener noreferrer"
+             href="https://www.ubereats.com/ca/store/bibis-kitchen/2pxbFLz9Tqm9RK9t9bSHPg?srsltid=AfmBOoqLX_Av8lKA1YZsxrpOBxGHizQEGQ_fjaxRqAv9QO92I2QcjJAE">
+            <div class="logoBox" aria-hidden="true"><div class="mark">UE</div></div>
+            <div class="orderText">
+              <p class="name">Uber Eats</p>
+              <p class="sub">Delivery</p>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+          </a>
+
+          <a class="orderBtn" target="_blank" rel="noopener noreferrer"
+             href="https://www.doordash.com/store/bibi-s-kitchen-vancouver-93088/?srsltid=AfmBOoqs8FDpO-_cbVQxWEl3TQI-NJQMMka4sE44oNLL08pjDRui36cB">
+            <div class="logoBox" aria-hidden="true"><div class="mark">DD</div></div>
+            <div class="orderText">
+              <p class="name">DoorDash</p>
+              <p class="sub">Delivery</p>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+          </a>
+
+          <a class="orderBtn" target="_blank" rel="noopener noreferrer"
+             href="https://www.skipthedishes.com/bibis-kitchen">
+            <div class="logoBox" aria-hidden="true"><div class="mark">SK</div></div>
+            <div class="orderText">
+              <p class="name">SkipTheDishes</p>
+              <p class="sub">Delivery</p>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+          </a>
+        </div>
+      </section>
+
+      <footer class="card footer">
+        <a class="btn" href="#home">← Back to Home</a>
+      </footer>
+    </div>
+
+    <!-- ===================== MENU PAGE ===================== -->
+    <div class="page" id="page-menu" aria-label="Menu page">
+      <section class="card block">
+        <h2>Menu</h2>
+        <div class="accentLine" aria-hidden="true"></div>
+        <p class="muted" style="margin:0;">Use the tabs to jump around instantly.</p>
+
+        <div class="menuTabs" id="menuTabs">
+          <div class="tabRow" aria-label="Menu category tabs">
+            <button class="tabBtn" type="button" data-jump="cat-appetizers">Appetizers</button>
+            <button class="tabBtn" type="button" data-jump="cat-lunch">Lunch</button>
+            <button class="tabBtn" type="button" data-jump="cat-drinks">Drinks</button>
+            <button class="tabBtn" type="button" data-jump="cat-desserts">Desserts</button>
+          </div>
+        </div>
+
+        <!-- APPETIZERS -->
+        <div class="category" id="cat-appetizers">
+          <div class="catTitle">APPETIZERS</div>
+          <p class="catNote">Includes Chaat Specials</p>
+
+          <div class="catTitle" style="margin-top:18px;font-size:16px;letter-spacing:1px;">CHAAT SPECIALS</div>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Samosa Plate</h3><p class="price">$7.00</p></div><p class="desc">2 samosas with chutney</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Samosa Chana</h3><p class="price">$8.99</p></div><p class="desc">Crushed samosa topped with chickpeas, yogurt & chutneys</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Kulcha Chole</h3><p class="price">$8.99</p></div><p class="desc">Grilled potatoes with a western flair</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Tikki Chana</h3><p class="price">$8.99</p></div><p class="desc">Spiced chickpeas over crispy aloo tikki</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Tikki Chat</h3><p class="price">$7.00</p></div><p class="desc">Aloo tikki topped with yogurt & chutneys</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Dahi Bhalla</h3><p class="price">$9.50</p></div><p class="desc">Soft lentil dumplings topped with yogurt</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Dahi Batata Puri</h3><p class="price">$8.50</p></div><p class="desc">Crispy puris with potato, yogurt & chutneys</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Chat Papri</h3><p class="price">$7.75</p></div><p class="desc">Crispy wafers layered with potatoes, yogurt, chutneys & sev</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Golgappe</h3><p class="price">$8.50</p></div><p class="desc">Crispy puris with tangy flavored water</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Paneer Pakora</h3><p class="price">$8.50</p></div><p class="desc">Soft paneer dipped in spiced batter & deep-fried</p></div></article>
+          </div>
+
+          <div class="catTitle" style="margin-top:20px;font-size:16px;letter-spacing:1px;">MORE APPETIZERS</div>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Veg Manchurian</h3><p class="price">$9.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Veg Momos</h3><p class="price">$9.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Spring Roll</h3><p class="price">$7.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Pav Bhaji</h3><p class="price">$10.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Vada Pav</h3><p class="price">$10.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Masala Fries</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Shahi Paneer Fries</h3><p class="price">$8.50</p></div></div></article>
+          </div>
+        </div>
+
+        <!-- LUNCH -->
+        <div class="category" id="cat-lunch">
+          <div class="catTitle">LUNCH</div>
+          <p class="catNote">Combos + Burgers & Sandwiches + Pasta & Rice + Parantha</p>
+
+          <div class="catTitle" style="margin-top:18px;font-size:16px;letter-spacing:1px;">COMBOS</div>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Lunch Special</h3><p class="price">$16.99</p></div><p class="desc">2 curries, rice, naan, side salad & butter</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Home Meal Combo</h3><p class="price">$22.99</p></div><p class="desc">2 curries, rice, naan, side salad & butter, dessert + drink</p></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Veg Rice Combo</h3><p class="price">$8.00</p></div><p class="desc">Steamed rice + choice of dal, sabji, or shahi paneer</p></div></article>
+          </div>
+
+          <div class="catTitle" style="margin-top:20px;font-size:16px;letter-spacing:1px;">BURGERS & SANDWICHES</div>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Veggie Burger</h3><p class="price">$7.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Noodle Burger</h3><p class="price">$9.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Paneer Tikka Wrap</h3><p class="price">$8.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Paneer Sandwich</h3><p class="price">$7.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Bombay Sandwich</h3><p class="price">$7.99</p></div></div></article>
+          </div>
+
+          <div class="catTitle" style="margin-top:20px;font-size:16px;letter-spacing:1px;">PASTA & RICE</div>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Creamy Pasta</h3><p class="price">$7.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Rose Pasta</h3><p class="price">$7.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Veggie Noodles</h3><p class="price">$9.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Masala Maggi</h3><p class="price">$7.00</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Fried Rice</h3><p class="price">$10.25</p></div></div></article>
+          </div>
+
+          <div class="catTitle" style="margin-top:20px;font-size:16px;letter-spacing:1px;">PARANTHA</div>
+          <p class="catNote">Freshly made & served hot with butter.</p>
+          <div class="menuGrid">
+            <article class="item">
+              <div class="thumb">Add photo</div>
+              <div class="itemBody">
+                <div class="nameRow"><h3 class="itemName">Parantha (Aloo / Gobi / Paneer / Mooli / Methi)</h3><p class="price">$7.75</p></div>
+                <p class="desc">Choose your filling</p>
+              </div>
+            </article>
+            <article class="item">
+              <div class="thumb">Add photo</div>
+              <div class="itemBody">
+                <div class="nameRow"><h3 class="itemName">Paratha Meal</h3><p class="price">$16.95</p></div>
+                <p class="desc">2 paratha with butter, yogurt & pickle</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- DRINKS -->
+        <div class="category" id="cat-drinks">
+          <div class="catTitle">DRINKS</div>
+          <p class="catNote">Hot + Cold</p>
+
+          <div class="catTitle" style="margin-top:18px;font-size:16px;letter-spacing:1px;">HOT DRINKS</div>
+          <p class="catNote">Pricing group 1: <strong style="color:var(--text)">S $3.15 · M $4.50 · L $5.15</strong></p>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Indian Masala Chai</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Kashmiri Chai</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Indian Steamed Coffee</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Cappuccino Coffee</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Original Coffee</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Original Decaf Coffee</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Americano Coffee</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Chai Tea Latte</h3><p class="price"></p></div></div></article>
+          </div>
+
+          <p class="catNote" style="margin-top:14px;">Pricing group 2: <strong style="color:var(--text)">S $2.15 · M $3.13 · L $4.75</strong></p>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">French Vanilla</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Hot Chocolate</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Earl Grey</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Orange Pekoe</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Green Tea</h3><p class="price"></p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Steamed Milk</h3><p class="price"></p></div></div></article>
+          </div>
+
+          <div class="catTitle" style="margin-top:20px;font-size:16px;letter-spacing:1px;">COLD DRINKS</div>
+          <p class="catNote">From your menu: <strong style="color:var(--text)">M $6.50</strong></p>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">KitKat Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Mango Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Oreo Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Chocolate Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Banana Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Strawberry Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Vanilla Shake</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Cold Coffee</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Caramel Iced Coffee</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Milk Badam</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Salted Lassi</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Sweet Lassi</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Mango Lassi</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Mix Fruit Smoothie</h3><p class="price">$6.50</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Mango Pineapple Smoothie</h3><p class="price">$6.50</p></div></div></article>
+          </div>
+        </div>
+
+        <!-- DESSERTS -->
+        <div class="category" id="cat-desserts">
+          <div class="catTitle">DESSERTS</div>
+          <p class="catNote">Includes Ice Cream</p>
+
+          <div class="catTitle" style="margin-top:18px;font-size:16px;letter-spacing:1px;">DESSERTS</div>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Gulab Jamun</h3><p class="price">$4.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Rasmalai</h3><p class="price">$4.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Mango Rasmalai</h3><p class="price">$4.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Cream Roll</h3><p class="price">$4.29</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Pastry</h3><p class="price">$4.99</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">Faluda Kulfi</h3><p class="price">$8.25</p></div></div></article>
+          </div>
+
+          <div class="catTitle" style="margin-top:20px;font-size:16px;letter-spacing:1px;">ICE CREAM</div>
+          <p class="catNote">Flavors: Mango, Vanilla, Strawberry, Chocolate, Matka</p>
+          <div class="menuGrid">
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">1 Scoop</h3><p class="price">$2.49</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">2 Scoops</h3><p class="price">$3.79</p></div></div></article>
+            <article class="item"><div class="thumb">Add photo</div><div class="itemBody"><div class="nameRow"><h3 class="itemName">3 Scoops</h3><p class="price">$4.59</p></div></div></article>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top:14px;font-size:13px;">
+          To add photos later: replace “Add photo” with an <code>&lt;img src="..." alt="..." /&gt;</code> inside each card.
+        </p>
+      </section>
+
+      <footer class="card footer">
+        <a class="btn" href="#home">← Back to Home</a>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Single-file "pages" using hash routing: #home, #order, #menu
+    const pages = ["home","order","menu"];
+    const pageEls = Object.fromEntries(pages.map(p => [p, document.getElementById("page-" + p)]));
+    const navLinks = Array.from(document.querySelectorAll(".navlinks a[data-page]"));
+
+    function setActivePage(name){
+      const page = pages.includes(name) ? name : "home";
+      pages.forEach(p => pageEls[p].classList.toggle("active", p === page));
+      navLinks.forEach(a => a.classList.toggle("active", a.dataset.page === page));
+      window.scrollTo({top:0, behavior:"smooth"});
+      updateMenuTabsTop();
+    }
+    function handleRoute(){
+      const hash = (location.hash || "#home").replace("#","");
+      setActivePage(hash);
+    }
+    window.addEventListener("hashchange", handleRoute);
+    window.addEventListener("resize", () => updateMenuTabsTop());
+    handleRoute();
+
+    // Menu sticky tabs positioned under header
+    function updateMenuTabsTop(){
+      const header = document.querySelector(".topbar");
+      const tabs = document.getElementById("menuTabs");
+      if(!tabs || !header) return;
+      tabs.style.top = (header.offsetHeight + 10) + "px";
+    }
+    updateMenuTabsTop();
+
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+
+      const header = document.querySelector(".topbar");
+      const tabs = document.getElementById("menuTabs");
+      const offset = (header ? header.offsetHeight : 0) + (tabs ? tabs.offsetHeight : 0) + 18;
+
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-jump]");
+      if(!btn) return;
+
+      const target = btn.getAttribute("data-jump");
+
+      if(location.hash !== "#menu"){
+        location.hash = "#menu";
+        setTimeout(() => scrollToSection(target), 260);
+      } else {
+        scrollToSection(target);
+      }
+    });
+
+    // ===== About slider (Prev/Next + dots + swipe) =====
+    const slider = document.getElementById("aboutSlider");
+    const slides = slider ? Array.from(slider.querySelectorAll(".slide")) : [];
+    const prevBtn = document.getElementById("prevSlide");
+    const nextBtn = document.getElementById("nextSlide");
+    const dotsWrap = document.getElementById("slideDots");
+    let currentSlide = 0;
+
+    function renderDots(){
+      if(!dotsWrap) return;
+      dotsWrap.innerHTML = "";
+      slides.forEach((_, i) => {
+        const d = document.createElement("button");
+        d.className = "dotBtn" + (i === currentSlide ? " active" : "");
+        d.type = "button";
+        d.setAttribute("aria-label", "Go to slide " + (i+1));
+        d.addEventListener("click", () => setSlide(i));
+        dotsWrap.appendChild(d);
+      });
+    }
+
+    function setSlide(index){
+      if(!slides.length) return;
+      currentSlide = (index + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle("active", i === currentSlide));
+      renderDots();
+    }
+
+    function nextSlide(){ setSlide(currentSlide + 1); }
+    function prevSlide(){ setSlide(currentSlide - 1); }
+
+    if(prevBtn) prevBtn.addEventListener("click", prevSlide);
+    if(nextBtn) nextBtn.addEventListener("click", nextSlide);
+
+    // Auto-rotate (optional)
+    let autoTimer = null;
+    function startAuto(){
+      if(!slides.length) return;
+      autoTimer = setInterval(nextSlide, 5000);
+    }
+    function stopAuto(){
+      if(autoTimer) clearInterval(autoTimer);
+      autoTimer = null;
+    }
+
+    // Swipe support (mobile)
+    if(slider){
+      let startX = 0, startY = 0;
+      let deltaX = 0, deltaY = 0;
+      let tracking = false;
+
+      slider.addEventListener("touchstart", (e) => {
+        if(!e.touches || e.touches.length !== 1) return;
+        stopAuto();
+        tracking = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        deltaX = 0; deltaY = 0;
+      }, {passive:true});
+
+      slider.addEventListener("touchmove", (e) => {
+        if(!tracking || !e.touches || e.touches.length !== 1) return;
+        deltaX = e.touches[0].clientX - startX;
+        deltaY = e.touches[0].clientY - startY;
+
+        // If the swipe is mostly horizontal, prevent the page from "rubber banding"
+        if(Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 12){
+          e.preventDefault();
+        }
+      }, {passive:false});
+
+      slider.addEventListener("touchend", () => {
+        if(!tracking) return;
+        tracking = false;
+
+        const swipeThreshold = 45; // px
+        if(Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold){
+          if(deltaX < 0) nextSlide();  // swipe left
+          else prevSlide();            // swipe right
+        }
+        startAuto();
+      }, {passive:true});
+
+      slider.addEventListener("mouseenter", stopAuto);
+      slider.addEventListener("mouseleave", startAuto);
+    }
+
+    if(slides.length){
+      setSlide(0);
+      startAuto();
+    }
+  </script>
+</body>
+</html>

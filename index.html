@@ -23,6 +23,9 @@
       --gold: rgba(250,204,21,.14);
       --r:18px;
       --r2:14px;
+
+      /* NEW: hero image hook (JS will set this to url("...")) */
+      --hero-url: none;
     }
 
     *{box-sizing:border-box}
@@ -68,6 +71,9 @@
       flex:0 0 auto;
     }
     .logobk span{font-weight:1000;letter-spacing:.7px}
+
+    /* NEW: image fill helper */
+    .imgFill{width:100%;height:100%;object-fit:cover;display:block}
 
     .navlinks{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .navlinks a{
@@ -125,7 +131,8 @@
         linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.74)),
         radial-gradient(900px 500px at 25% 15%, rgba(95,125,44,.22), transparent 60%),
         radial-gradient(800px 450px at 85% 10%, rgba(110,231,255,.12), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+        var(--hero-url); /* NEW: actual image goes here */
       background-size: cover;
       background-position: center;
       filter: saturate(1.12);
@@ -233,7 +240,7 @@
       overflow:hidden;
       flex:1;
       min-height: 260px;
-      touch-action: pan-y; /* allow vertical scroll, we handle horizontal swipe */
+      touch-action: pan-y;
       user-select: none;
     }
     .slide{position:absolute; inset:0; display:none}
@@ -254,7 +261,7 @@
       width:100%; height:100%;
       object-fit:cover;
       display:block;
-      pointer-events:none; /* keeps swipe smooth */
+      pointer-events:none;
     }
 
     .sliderControls{
@@ -302,6 +309,8 @@
       transition: transform .12s ease, border-color .12s ease, background .12s ease;
     }
     .orderBtn:hover{transform:translateY(-2px);border-color: rgba(95,125,44,.65);background: rgba(95,125,44,.12)}
+
+    /* OLD box still used, but now we’ll inject an <img> inside it via JS */
     .logobkBox{
       width:64px;height:64px;border-radius:18px;
       border:1px solid rgba(255,255,255,.14);
@@ -310,6 +319,7 @@
       flex:0 0 auto;
       overflow:hidden;
     }
+    .logobkBox img{width:100%;height:100%;object-fit:cover;display:block}
     .logobkBox .mark{
       width:44px;height:44px;border-radius:14px;
       display:grid;place-items:center;
@@ -318,6 +328,7 @@
       font-weight:1000;
       letter-spacing:.5px;
     }
+
     .orderText{flex:1}
     .orderText .name{margin:0;font-weight:1000;font-size:18px}
     .orderText .sub{margin:4px 0 0;color:var(--muted);font-size:13px}
@@ -416,7 +427,9 @@
       color:rgba(255,255,255,.65);
       font-weight:900;
       letter-spacing:.4px;
+      overflow:hidden; /* NEW: ensures images clip nicely */
     }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .itemBody{padding:12px}
     .nameRow{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
     .itemName{
@@ -468,7 +481,11 @@
   <header class="topbar">
     <div class="wrap navrow">
       <a class="brand" href="#home" aria-label="BiBi's Kitchen home">
-        <div class="logobk" aria-hidden="true"><span>BK</span></div>
+        <!-- UPDATED: logo supports image + BK fallback -->
+        <div class="logobk" aria-hidden="true">
+          <img id="siteLogo" alt="BiBi's Kitchen logo" style="display:none" class="imgFill" />
+          <span id="logoFallback">BK</span>
+        </div>
         <span>BiBi’s Kitchen</span>
       </a>
 
@@ -504,14 +521,13 @@
             <p class="big">418 Terminal Avenue</p>
             <p>Vancouver, British Columbia V6A 0C1, Canada</p>
             <p class="small"><span class="muted">Phone:</span> <a href="tel:16045659898"><strong style="color:var(--text)">604-565-9898</strong></a></p>
-            <p class="small muted" style="margin-top:10px;">Tip: you can replace the hero background with a food photo later.</p>
+            <p class="small muted" style="margin-top:10px;">Tip: Add a hero image named <strong>hero.jpg</strong> next to index.html (or in /images/).</p>
           </aside>
         </div>
       </section>
 
       <!-- About + Slider -->
       <section class="aboutGrid">
-        <!-- Keep this order so on DESKTOP slider stays on the RIGHT -->
         <div class="card aboutText" aria-label="About us">
           <h2>About Us</h2>
           <div class="accentLine" aria-hidden="true"></div>
@@ -520,7 +536,7 @@
             Our journey began with a simple vision: to bring the vibrant flavors and authentic tastes of Indian fast food to discerning palates all around.
           </p>
           <p class="muted" style="margin:12px 0 0;font-size:13px;">
-            (You can swap these slider placeholders with real photos anytime.)
+            (Slider loads about-1.jpg / about-2.jpg / about-3.jpg from root or /images/.)
           </p>
         </div>
 
@@ -528,19 +544,21 @@
           <h2 style="margin:0;">Gallery</h2>
           <div class="accentLine" aria-hidden="true"></div>
 
+          <!-- UPDATED: each slide has an image tag + placeholder box -->
           <div class="slider" id="aboutSlider">
             <div class="slide active">
-              <!-- Replace this placeholder with an actual image if you want:
-                   <img src="images/slide1.jpg" alt="BiBi's Kitchen food" /> -->
-              <div class="slideBox">Slide 1 (Add photo)</div>
+              <img class="aboutSlideImg" data-slide="1" alt="BiBi's Kitchen photo 1" style="display:none" />
+              <div class="slideBox">Slide 1 (Add about-1.jpg)</div>
             </div>
 
             <div class="slide">
-              <div class="slideBox">Slide 2 (Add photo)</div>
+              <img class="aboutSlideImg" data-slide="2" alt="BiBi's Kitchen photo 2" style="display:none" />
+              <div class="slideBox">Slide 2 (Add about-2.jpg)</div>
             </div>
 
             <div class="slide">
-              <div class="slideBox">Slide 3 (Add photo)</div>
+              <img class="aboutSlideImg" data-slide="3" alt="BiBi's Kitchen photo 3" style="display:none" />
+              <div class="slideBox">Slide 3 (Add about-3.jpg)</div>
             </div>
           </div>
 
@@ -649,7 +667,10 @@
         <div class="orderGrid">
           <a class="orderBtn" target="_blank" rel="noopener noreferrer"
              href="https://www.ubereats.com/ca/store/bibis-kitchen/2pxbFLz9Tqm9RK9t9bSHPg?srsltid=AfmBOoqLX_Av8lKA1YZsxrpOBxGHizQEGQ_fjaxRqAv9QO92I2QcjJAE">
-            <div class="logobkBox" aria-hidden="true"><div class="mark">UE</div></div>
+            <div class="logobkBox" aria-hidden="true">
+              <img class="appLogo" data-app="uber-eats" alt="Uber Eats logo" style="display:none" />
+              <div class="mark">UE</div>
+            </div>
             <div class="orderText">
               <p class="name">Uber Eats</p>
               <p class="sub">Delivery</p>
@@ -659,7 +680,10 @@
 
           <a class="orderBtn" target="_blank" rel="noopener noreferrer"
              href="https://www.doordash.com/store/bibi-s-kitchen-vancouver-93088/?srsltid=AfmBOoqs8FDpO-_cbVQxWEl3TQI-NJQMMka4sE44oNLL08pjDRui36cB">
-            <div class="logobkBox" aria-hidden="true"><div class="mark">DD</div></div>
+            <div class="logobkBox" aria-hidden="true">
+              <img class="appLogo" data-app="doordash" alt="DoorDash logo" style="display:none" />
+              <div class="mark">DD</div>
+            </div>
             <div class="orderText">
               <p class="name">DoorDash</p>
               <p class="sub">Delivery</p>
@@ -669,7 +693,10 @@
 
           <a class="orderBtn" target="_blank" rel="noopener noreferrer"
              href="https://www.skipthedishes.com/bibis-kitchen">
-            <div class="logobkBox" aria-hidden="true"><div class="mark">SK</div></div>
+            <div class="logobkBox" aria-hidden="true">
+              <img class="appLogo" data-app="skipthedishes" alt="SkipTheDishes logo" style="display:none" />
+              <div class="mark">SK</div>
+            </div>
             <div class="orderText">
               <p class="name">SkipTheDishes</p>
               <p class="sub">Delivery</p>
@@ -855,7 +882,7 @@
         </div>
 
         <p class="muted" style="margin-top:14px;font-size:13px;">
-          To add photos later: replace “Add photo” with an <code>&lt;img src="..." alt="..." /&gt;</code> inside each card.
+          Images auto-load by filename. Example: <strong>Samosa Plate → samosa-plate.jpg</strong> (root or /menu or /images/menu).
         </p>
       </section>
 
@@ -869,7 +896,167 @@
     // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Single-file "pages" using hash routing: #home, #order, #menu
+    // =========================
+    // IMAGE LOADER (tries many paths)
+    // =========================
+    function tryLoadImage(imgEl, candidates, onSuccess){
+      let i = 0;
+      function attempt(){
+        if(i >= candidates.length) return;
+        const src = candidates[i++];
+        imgEl.src = src;
+      }
+      imgEl.onerror = attempt;
+      imgEl.onload = () => { imgEl.onerror = null; if(onSuccess) onSuccess(imgEl.src); };
+      attempt();
+    }
+
+    function slugify(text){
+      return (text || "")
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/['’]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
+    }
+
+    function candidatesForBase(base, exts, folders){
+      const out = [];
+      folders.forEach(f => {
+        exts.forEach(ext => out.push(`${f}${base}.${ext}`));
+      });
+      return out;
+    }
+
+    // =========================
+    // LOGO (your screenshot: logobk.png in root)
+    // =========================
+    (function(){
+      const logo = document.getElementById("siteLogo");
+      const fallback = document.getElementById("logoFallback");
+      if(!logo) return;
+
+      const exts = ["png","jpg","jpeg","webp"];
+      const folders = ["./", "./images/"];
+      const bases = ["logobk","logo","logo-bk","bk-logo"];
+
+      const candidates = [];
+      bases.forEach(b => candidates.push(...candidatesForBase(b, exts, folders)));
+
+      tryLoadImage(logo, candidates, () => {
+        logo.style.display = "block";
+        if(fallback) fallback.style.display = "none";
+      });
+    })();
+
+    // =========================
+    // HERO BG (hero.jpg or hero.png)
+    // =========================
+    (function(){
+      const hero = document.querySelector(".hero");
+      if(!hero) return;
+
+      const exts = ["jpg","jpeg","png","webp"];
+      const folders = ["./", "./images/"];
+      const candidates = candidatesForBase("hero", exts, folders);
+
+      const probe = new Image();
+      tryLoadImage(probe, candidates, (src) => {
+        hero.style.setProperty("--hero-url", `url("${src}")`);
+      });
+    })();
+
+    // =========================
+    // ABOUT SLIDER IMAGES (about-1/2/3)
+    // =========================
+    (function(){
+      const imgs = Array.from(document.querySelectorAll(".aboutSlideImg"));
+      if(!imgs.length) return;
+
+      const exts = ["jpg","jpeg","png","webp"];
+      const folders = ["./", "./images/"];
+
+      imgs.forEach(img => {
+        const n = img.getAttribute("data-slide");
+        const base = `about-${n}`;
+        const candidates = candidatesForBase(base, exts, folders);
+
+        const placeholder = img.parentElement.querySelector(".slideBox");
+        tryLoadImage(img, candidates, () => {
+          img.style.display = "block";
+          if(placeholder) placeholder.style.display = "none";
+        });
+      });
+    })();
+
+    // =========================
+    // ORDER APP LOGOS
+    // Put files like:
+    // uber-eats.png, doordash.png, skipthedishes.png
+    // Either in root OR /images/apps/ OR /apps/
+    // =========================
+    (function(){
+      const appImgs = Array.from(document.querySelectorAll(".appLogo"));
+      if(!appImgs.length) return;
+
+      const exts = ["png","jpg","jpeg","webp","svg"];
+      const folders = ["./", "./apps/", "./images/apps/"];
+
+      appImgs.forEach(img => {
+        const base = img.getAttribute("data-app");
+        const candidates = candidatesForBase(base, exts, folders);
+
+        const mark = img.parentElement.querySelector(".mark");
+        tryLoadImage(img, candidates, () => {
+          img.style.display = "block";
+          if(mark) mark.style.display = "none";
+        });
+      });
+    })();
+
+    // =========================
+    // MENU ITEM PHOTOS (AUTO)
+    // Filename rule: slug of itemName
+    // Example: "Samosa Plate" -> "samosa-plate.jpg"
+    //
+    // Put images in:
+    //  - root: samosa-plate.jpg
+    //  - /menu/: menu/samosa-plate.jpg
+    //  - /images/menu/: images/menu/samosa-plate.jpg
+    // =========================
+    (function(){
+      const items = Array.from(document.querySelectorAll(".item"));
+      if(!items.length) return;
+
+      const exts = ["jpg","jpeg","png","webp"];
+      const folders = ["./", "./menu/", "./images/menu/"];
+
+      items.forEach(item => {
+        const nameEl = item.querySelector(".itemName");
+        const thumb = item.querySelector(".thumb");
+        if(!nameEl || !thumb) return;
+
+        // If thumb already has an image, skip
+        if(thumb.querySelector("img")) return;
+
+        const slug = slugify(nameEl.textContent);
+        if(!slug) return;
+
+        const img = document.createElement("img");
+        const candidates = candidatesForBase(slug, exts, folders);
+
+        // Keep the "Add photo" text visible until load succeeds
+        tryLoadImage(img, candidates, () => {
+          thumb.innerHTML = "";
+          thumb.appendChild(img);
+        });
+      });
+    })();
+
+    // =========================
+    // ROUTING + MENU (your original)
+    // =========================
     const pages = ["home","order","menu"];
     const pageEls = Object.fromEntries(pages.map(p => [p, document.getElementById("page-" + p)]));
     const navLinks = Array.from(document.querySelectorAll(".navlinks a[data-page]"));
@@ -889,7 +1076,6 @@
     window.addEventListener("resize", () => updateMenuTabsTop());
     handleRoute();
 
-    // Menu sticky tabs positioned under header
     function updateMenuTabsTop(){
       const header = document.querySelector(".topbar");
       const tabs = document.getElementById("menuTabs");
@@ -958,7 +1144,6 @@
     if(prevBtn) prevBtn.addEventListener("click", prevSlide);
     if(nextBtn) nextBtn.addEventListener("click", nextSlide);
 
-    // Auto-rotate (optional)
     let autoTimer = null;
     function startAuto(){
       if(!slides.length) return;
@@ -969,7 +1154,6 @@
       autoTimer = null;
     }
 
-    // Swipe support (mobile)
     if(slider){
       let startX = 0, startY = 0;
       let deltaX = 0, deltaY = 0;
@@ -989,7 +1173,6 @@
         deltaX = e.touches[0].clientX - startX;
         deltaY = e.touches[0].clientY - startY;
 
-        // If the swipe is mostly horizontal, prevent the page from "rubber banding"
         if(Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 12){
           e.preventDefault();
         }
@@ -999,10 +1182,10 @@
         if(!tracking) return;
         tracking = false;
 
-        const swipeThreshold = 45; // px
+        const swipeThreshold = 45;
         if(Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold){
-          if(deltaX < 0) nextSlide();  // swipe left
-          else prevSlide();            // swipe right
+          if(deltaX < 0) nextSlide();
+          else prevSlide();
         }
         startAuto();
       }, {passive:true});
